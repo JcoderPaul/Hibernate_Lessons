@@ -1,4 +1,4 @@
-package oldboy.lesson_12.MappingEntity.VirtualParty;
+package oldboy.lesson_12.VirtualParty;
 
 import lombok.*;
 import org.hibernate.annotations.Cascade;
