@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+/*
+Особенности этого раздела в том, что сюда можно затолкать много не особо
+нужного для проекта, или недозатолкать именно того, что нужно. К сожалению
+опыт приходит с практикой. Не всегда новые релизы библиотек, стыкуются со
+старыми. Методы имеющие одни и те же названия в одной и той же библиотеке
+с течением времени (со сменой релиза) легко могут поменять входящие
+параметры и т.п., в итоге нужно изучать документацию и тратить время на это.
+
+В данном случае редкая библиотечка : com.vladmihalcea:hibernate-types, хренова
+себя чувствует с hibernate-core:6.2.6.Final (и вариантов два копаться и
+стыковать или даунгрейд, как собственно я и сделал).
+*/
+dependencies {
+    /*
+    https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    Данная библиотека применяется для логирования процессов
+    */
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+
+    /*
+    https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    Библиотеки для работы с JSON
+    */
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+
+    /*
+    https://mvnrepository.com/artifact/com.vladmihalcea/hibernate-types-52
+    Данная библиотека применяется при реализации пользовательских типов в
+    работе с Hibernate и БД.
+    */
+    implementation 'com.vladmihalcea:hibernate-types-52:2.21.1'
+
+    /*
+    https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+    Чтобы иметь возможность использовать аннотации для стыковки с Hibernate,
+    хотя библиотека jakarta.persistence будет работать точно так же с аннотациями
+    @Entity, @Table, @Id, @Column и т.д.
+    */
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+
+    /*
+    https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
+    https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    */
+    compileOnly 'org.hibernate:hibernate-annotations:3.5.6-Final'
+    /* полная имплементация нам будет нужна только тут: */
+    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+    /*
+    https://mvnrepository.com/artifact/org.postgresql/postgresql
+    на стадии компиляции он нам не нужен пусть будет runtimeOnly
+    */
+    runtimeOnly 'org.postgresql:postgresql:42.6.0'
+
+    /* Lombok аннотации нужны только на этапе компиляции */
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    /* Lombok для использования в тестах */
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    /* Junit 5 */
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
