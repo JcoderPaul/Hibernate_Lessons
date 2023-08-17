@@ -1,0 +1,78 @@
+****** Interface CriteriaQuery<T> ******
+
+Библиотека (пакет): javax.persistence.criteria
+
+Параметры типа: T- тип определяемого результата
+Все суперинтерфейсы: AbstractQuery <T>, CommonAbstractCriteria
+
+**********************************************************************************************************
+public interface CriteriaQuery<T> extends AbstractQuery<T>
+**********************************************************************************************************
+
+Интерфейс CriteriaQuery определяет функциональные возможности,
+специфичные для запросов верхнего уровня.
+
+*** Методы ***
+
+CriteriaQuery<T>
+        distinct(boolean distinct) - Укажите, будут ли дублироваться результаты запроса.
+
+List<Order>
+        getOrderList() - Возвратите выражения упорядочивания в порядке старшинства.
+
+Set<ParameterExpression<?>>
+        getParameters() - Вернуть параметры запроса.
+
+CriteriaQuery<T>
+        groupBy(Expression<?>... grouping) - Укажите выражения, которые используются
+                                             для формирования групп по результатам
+                                             запроса.
+
+CriteriaQuery<T>
+        groupBy(List<Expression<?>> grouping) - Укажите выражения, которые используются
+                                                для формирования групп по результатам
+                                                запроса.
+
+CriteriaQuery<T>
+        having(Expression<Boolean> restriction) - Укажите ограничение по группам запроса.
+
+CriteriaQuery<T>
+        having(Predicate... restrictions) - Задайте ограничения по группам запроса в
+                                            соответствии с конъюнкцией указанных предикатов
+                                            ограничений.
+
+CriteriaQuery<T>
+        multiselect(List<Selection<?>> selectionList) - Укажите элементы выбора, которые должны
+                                                        быть возвращены в результате запроса.
+
+CriteriaQuery<T>
+        multiselect(Selection<?>... selections) - Укажите элементы выбора, которые должны быть
+                                                  возвращены в результате запроса.
+
+CriteriaQuery<T>
+        orderBy(List<Order> o) - Укажите выражения упорядочения, которые используются для
+                                 упорядочения результатов запроса.
+
+CriteriaQuery<T>
+        orderBy(Order... o) - Укажите выражения упорядочения, которые используются для
+                              упорядочения результатов запроса.
+
+CriteriaQuery<T>
+        select(Selection<? extends T> selection) - Укажите элемент, который должен быть возвращен
+                                                   в результате запроса.
+
+CriteriaQuery<T>
+        where(Expression<Boolean> restriction) - Измените запрос, чтобы ограничить результат
+                                                 запроса в соответствии с указанным логическим
+                                                 выражением.
+
+CriteriaQuery<T>
+        where(Predicate... restrictions) - Измените запрос, чтобы ограничить результат запроса
+                                           в соответствии с сочетанием указанных предикатов
+                                           ограничения.
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.AbstractQuery:
+from, from, getGroupList, getGroupRestriction, getResultType, getRoots, getSelection, isDistinct
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.CommonAbstractCriteria:
+getRestriction, subquery

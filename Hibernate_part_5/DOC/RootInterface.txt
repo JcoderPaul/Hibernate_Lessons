@@ -1,0 +1,39 @@
+****** Interface Root<X> ******
+
+Библиотека(пакет): javax.persistence.criteria
+
+Параметры типа: X- тип объекта, на который ссылается корень
+Все суперинтерфейсы: Expression<X>,
+                     FetchParent<X,X>,
+                     From<X,X>,
+                     Path<X>,
+                     Selection<X>,
+                     TupleElement<X>
+
+******************************************************************************************************
+public interface Root<X> extends From<X,X>
+******************************************************************************************************
+
+Корневой тип в предложении from. Корни запросов всегда ссылаются на сущности.
+
+*** Методы ***
+
+EntityType<X> getModel() - Вернуть объект метамодели, соответствующий корню.
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.From
+getCorrelationParent, getJoins, isCorrelated, join, joinCollection, joinList, joinMap, joinSet
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.Path
+get, getParentPath, type
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.Expression
+as, in, , isNotNull, isNull
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.Selection
+alias, getCompoundSelectionItems, isCompoundSelection
+
+Методы, унаследованные от интерфейса javax.persistence.TupleElement
+getAlias, getJavaType
+
+Методы, унаследованные от интерфейса javax.persistence.criteria.FetchParent
+fetch, getFetches

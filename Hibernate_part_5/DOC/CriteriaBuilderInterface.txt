@@ -1,0 +1,650 @@
+****** Interface CriteriaBuilder ******
+
+Библиотека (пакет): javax.persistence.criteria
+
+public interface CriteriaBuilder
+
+Используется для построения запросов критериев, составных выборок,
+выражений, предикатов, упорядочивания.
+!!! Обратите внимание !!! В данном API, Predicate используется вместо
+Expression<Boolean>, чтобы обойти тот факт, что generics в JAVA не
+совместимы с varags.
+
+*** Вложенные классы ***
+
+- static interface CriteriaBuilder.Case<R> - Интерфейс, используемый для построения
+                                             выражений общего регистра.
+- static interface CriteriaBuilder.Coalesce<T> - Интерфейс, используемый для создания
+                                                 объединенных выражений.
+- static interface CriteriaBuilder.In<T> - Интерфейс, используемый для построения предикатов.
+- static interface CriteriaBuilder.SimpleCase<C,R> - Интерфейс, используемый для создания
+                                                     простых выражений case.
+- static class CriteriaBuilder.Trimspec - Используется для указания способа обрезки строк.
+
+*** Методы ***
+
+<N extends Number> Expression<N>
+        abs(Expression<N> x) - Создайте выражение, которое возвращает
+                                               абсолютное значение своего аргумента.
+
+<Y> Expression<Y>
+        all(Subquery<Y> subquery) - Создайте выражение all для результатов подзапроса.
+
+Predicate
+        and(Expression<Boolean> x,
+            Expression<Boolean> y) - Создайте конъюнкцию данных логических выражений.
+
+Predicate
+        and(Predicate... restrictions) - Создайте конъюнкцию данных предикатов ограничения.
+
+<Y> Expression<Y>
+        any(Subquery<Y> subquery) - Создайте любое выражение для результатов подзапроса.
+
+CompoundSelection<Object[]>
+        array(Selection<?>... selections) - Создайте элемент выбора со значением массива.
+
+Order
+        asc(Expression<?> x) - Создайте порядок по возрастанию значения выражения.
+
+<N extends Number> Expression<Double>
+        avg(Expression<N> x) - Создайте агрегатное выражение, применяя операцию avg.
+
+<Y extends Comparable<? super Y>> Predicate
+        between(Expression<? extends Y> v,
+                Expression<? extends Y> x,
+                Expression<? extends Y> y) - Создайте предикат для проверки того, находится
+                                             ли первый аргумент между вторым и третьим
+                                             аргументами по значению.
+
+<Y extends Comparable<? super Y>> Predicate
+        between(Expression<? extends Y> v,
+                                      Y x,
+                                      Y y) - Создайте предикат для проверки того, находится ли
+                                             первый аргумент между вторым и третьим аргументами
+                                             по значению.
+
+<T> CriteriaBuilder.Coalesce<T>
+        coalesce() - Создайте выражение объединения.
+
+<Y> Expression<Y>
+        coalesce(Expression<? extends Y> x,
+                 Expression<? extends Y> y) - Создайте выражение, которое возвращает значение null,
+                                              если все его аргументы оцениваются как null, и значение
+                                              первого ненулевого аргумента в противном случае.
+
+<Y> Expression<Y>
+        coalesce(Expression<? extends Y> x,
+                                       Y y) - Создайте выражение, которое возвращает значение null,
+                                              если все его аргументы оцениваются как null, и значение
+                                              первого ненулевого аргумента в противном случае.
+
+Expression<String>
+        concat(Expression<String> x,
+               Expression<String> y) - Создайте выражение для конкатенации строк.
+
+Expression<String>
+        concat(Expression<String> x,
+                           String y) - Создайте выражение для конкатенации строк.
+
+Expression<String>
+        concat(String x,
+               Expression<String> y) - Создайте выражение для конкатенации строк.
+
+Predicate
+        conjunction() - Создайте союз (с нулевыми союзами).
+
+<Y> CompoundSelection<Y>
+        construct(Class<Y> resultClass,
+                  Selection<?>... selections) - Создайте элемент выбора, соответствующий конструктору.
+
+Expression<Long>
+        count(Expression<?> x) - Создайте агрегатное выражение, применяя операцию подсчета.
+
+Expression<Long>
+        countDistinct(Expression<?> x) - Создайте агрегатное выражение, применяя операцию
+                                         подсчета отдельных элементов.
+
+<T> CriteriaDelete<T>
+        createCriteriaDelete(Class<T> targetEntity) - Создайте CriteriaDelete объект запроса
+                                                      для выполнения операции массового удаления.
+
+<T> CriteriaUpdate<T>
+        createCriteriaUpdate(Class<T> targetEntity) - Создайте CriteriaUpdate объект запроса для
+                                                      выполнения операции массового обновления.
+
+CriteriaQuery<Object>
+        createQuery() - Создайте CriteriaQuery объект.
+
+<T> CriteriaQuery<T>
+        createQuery(Class<T> resultClass) - Создайте CriteriaQuery объект с указанным типом результата.
+
+CriteriaQuery<Tuple>
+        createTupleQuery() - Создайте CriteriaQuery объект, который возвращает кортеж объектов в
+                             качестве результата.
+
+Expression<Date>
+        currentDate() - Создайте выражение для возврата текущей даты.
+
+Expression<Time>
+        currentTime() - Создайте выражение для возврата текущего времени.
+
+Expression<Timestamp>
+        currentTimestamp() - Создайте выражение для возврата текущей метки времени.
+
+Order
+        desc(Expression<?> x) - Создайте порядок по убыванию значения выражения.
+
+<N extends Number> Expression<N>
+        diff(Expression<? extends N> x,
+             Expression<? extends N> y) - Создайте выражение, которое возвращает разницу
+                                          между своими аргументами.
+
+<N extends Number> Expression<N>
+        diff(Expression<? extends N> x,
+                                   N y) - Создайте выражение, которое возвращает разницу
+                                          между своими аргументами.
+
+<N extends Number> Expression<N>
+        diff(N x,
+             Expression<? extends N> y) - Создайте выражение, которое возвращает разницу
+                                          между своими аргументами.
+
+Predicate
+        disjunction() - Создайте дизъюнкт (с нулевыми дизъюнкциями).
+
+Predicate
+        equal(Expression<?> x,
+              Expression<?> y) - Создайте предикат для проверки аргументов на равенство.
+
+Predicate
+        equal(Expression<?> x,
+                     Object y) - Создайте предикат для проверки аргументов на равенство.
+
+Predicate
+        exists(Subquery<?> subquery) - Создайте предикат, проверяющий наличие результата подзапроса.
+
+<T> Expression<T>
+        function(String name,
+                 Class<T> type,
+                 Expression<?>... args) - Создайте выражение для выполнения функции базы данных.
+
+Predicate
+        ge(Expression<? extends Number> x,
+           Expression<? extends Number> y) - Создайте предикат для проверки того, является
+                                             ли первый аргумент большим или равным второму.
+
+Predicate
+        ge(Expression<? extends Number> x,
+                                 Number y) - Создайте предикат для проверки того, является
+                                             ли первый аргумент большим или равным второму.
+
+<Y extends Comparable<? super Y>> Predicate
+        greaterThan(Expression<? extends Y> x,
+                    Expression<? extends Y> y) - Создайте предикат для проверки того, больше
+                                                 ли первый аргумент, чем второй.
+
+<Y extends Comparable<? super Y>> Predicate
+        greaterThan(Expression<? extends Y> x,
+                                          Y y) - Создайте предикат для проверки того, больше ли
+                                                 первый аргумент, чем второй.
+
+<Y extends Comparable<? super Y>> Predicate
+        greaterThanOrEqualTo(Expression<? extends Y> x,
+                             Expression<? extends Y> y) - Создайте предикат для проверки того,
+                                                          является ли первый аргумент большим
+                                                          или равным второму.
+
+<Y extends Comparable<? super Y>> Predicate
+        greaterThanOrEqualTo(Expression<? extends Y> x,
+                                                   Y y) - Создайте предикат для проверки того,
+                                                          является ли первый аргумент большим
+                                                          или равным второму.
+
+<X extends Comparable<? super X>> Expression<X>
+        greatest(Expression<X> x) - Создайте агрегатное выражение для нахождения наибольшего из
+                                    значений (строки, даты и т. д.).
+
+Predicate
+        gt(Expression<? extends Number> x,
+           Expression<? extends Number> y) - Создайте предикат для проверки того, больше ли первый
+                                             аргумент, чем второй.
+
+Predicate
+        gt(Expression<? extends Number> x, Number y) - Создайте предикат для проверки того, больше
+                                                       ли первый аргумент, чем второй.
+
+<T> CriteriaBuilder.In<T>
+        in(Expression<? extends T> expression) - Создайте предикат, чтобы проверить, содержится ли
+                                                 данное выражение в списке значений.
+
+<C extends Collection<?>> Predicate
+        isEmpty(Expression<C> collection) - Создайте предикат, проверяющий, пуста ли коллекция.
+
+Predicate
+        isFalse(Expression<Boolean> x) - Создайте проверку предиката на ложное значение.
+
+<E,C extends Collection<E>> Predicate
+        isMember(E elem,
+                 Expression<C> collection) - Создайте предикат, проверяющий, является
+                                             ли элемент членом коллекции.
+
+<E,C extends Collection<E>> Predicate
+        isMember(Expression<E> elem,
+                 Expression<C> collection) - Создайте предикат, проверяющий, является ли элемент
+                                             членом коллекции.
+
+<C extends Collection<?>> Predicate
+        iNotEmpty(Expression<C> collection) - Создайте предикат, проверяющий, не пуста ли коллекция.
+
+<E,C extends Collection<E>> Predicate
+        isNotMember(E elem,
+                    Expression<C> collection) - Создайте предикат, который проверяет, не является
+                                                ли элемент членом коллекции.
+
+<E,C extends Collection<E>> Predicate
+        isNotMember(Expression<E> elem,
+                    Expression<C> collection) - Создайте предикат, который проверяет, не является
+                                                ли элемент членом коллекции.
+
+Predicate
+        isNotNull(Expression<?> x) - Создайте предикат, чтобы проверить, не является
+                                     ли выражение нулевым.
+
+Predicate
+        isNull(Expression<?> x) - Создайте предикат, чтобы проверить, является ли выражение нулевым.
+
+Predicate
+        isTrue(Expression<Boolean> x) - Создайте проверку предиката для истинного значения.
+
+<K,M extends Map<K,?>> Expression<Set<K>>
+        keys(M map) - Создайте выражение, которое возвращает ключи карты.
+
+Predicate
+        le(Expression<? extends Number> x,
+           Expression<? extends Number> y) - Создайте предикат для проверки того, меньше ли
+                                             первый аргумент второго или равен ему.
+
+Predicate
+        le(Expression<? extends Number> x,
+                                 Number y) - Создайте предикат для проверки того, меньше ли первый
+                                             аргумент второго или равен ему.
+
+<X extends Comparable<? super X>> Expression<X>
+        least(Expression<X> x) - Создайте агрегатное выражение для поиска наименьшего из значений
+                                 (строки, даты и т. д.).
+
+Expression<Integer>
+        length(Expression<String> x) - Создайте выражение для возврата длины строки.
+
+<Y extends Comparable<? super Y>> Predicate
+        lessThan(Expression<? extends Y> x,
+                 Expression<? extends Y> y) - Создайте предикат для проверки того, меньше ли первый
+                                              аргумент, чем второй.
+
+<Y extends Comparable<? super Y>> Predicate
+        lessThan(Expression<? extends Y> x,
+                                       Y y) - Создайте предикат для проверки того, меньше ли первый
+                                              аргумент, чем второй.
+
+<Y extends Comparable<? super Y>> Predicate
+        lessThanOrEqualTo(Expression<? extends Y> x,
+                          Expression<? extends Y> y) - Создайте предикат для проверки того, меньше ли
+                                                       первый аргумент второго или равен ему.
+
+<Y extends Comparable<? super Y>> Predicate
+        lessThanOrEqualTo(Expression<? extends Y> x,
+                                                Y y) - Создайте предикат для проверки того, меньше ли
+                                                       первый аргумент второго или равен ему.
+
+Predicate
+        like(Expression<String> x,
+             Expression<String> pattern) - Создайте предикат для проверки того, удовлетворяет ли
+                                           выражение заданному шаблону.
+
+Predicate
+        like(Expression<String> x,
+             Expression<String> pattern,
+             char escapeChar) - Создайте предикат для проверки того, удовлетворяет ли выражение
+                                заданному шаблону.
+
+Predicate
+        like(Expression<String> x,
+             Expression<String> pattern,
+             Expression<Character> escapeChar) - Создайте предикат для проверки того, удовлетворяет
+                                                 ли выражение заданному шаблону.
+
+Predicate
+        like(Expression<String> x,
+                   String pattern) - Создайте предикат для проверки того, удовлетворяет ли выражение
+                                     заданному шаблону.
+
+Predicate
+        like(Expression<String> x,
+             String pattern,
+             char escapeChar) - Создайте предикат для проверки того, удовлетворяет ли выражение
+                                заданному шаблону.
+
+Predicate
+        like(Expression<String> x,
+                   String pattern,
+                   Expression<Character> escapeChar) - Создайте предикат для проверки того,
+                                                       удовлетворяет ли выражение заданному
+                                                       шаблону.
+
+<T> Expression<T>
+        literal(T value) - Создайте выражение для литерала.
+
+Expression<Integer>
+        locate(Expression<String> x,
+               Expression<String> pattern) - Создайте выражение, чтобы найти позицию одной строки
+                                             в другой, возвращая позицию первого символа, если она
+                                             найдена.
+
+Expression<Integer>
+        locate(Expression<String> x,
+               Expression<String> pattern,
+               Expression<Integer> from) - Создайте выражение, чтобы найти позицию одной строки
+                                           в другой, возвращая позицию первого символа, если она
+                                           найдена.
+
+Expression<Integer>
+        locate(Expression<String> x,
+                     String pattern) - Создайте выражение, чтобы найти позицию одной строки в другой,
+                                       возвращая позицию первого символа, если она найдена.
+
+Expression<Integer>
+        locate(Expression<String> x,
+                     String pattern,
+                           int from) - Создайте выражение, чтобы найти позицию одной строки в другой,
+                                       возвращая позицию первого символа, если она найдена.
+
+Expression<String>
+        lower(Expression<String> x) - Создайте выражение для преобразования строки в нижний регистр.
+
+Predicate
+        lt(Expression<? extends Number> x,
+           Expression<? extends Number> y) - Создайте предикат для проверки того, меньше ли первый
+                                             аргумент, чем второй.
+
+Predicate
+        lt(Expression<? extends Number> x,
+                                 Number y) - Создайте предикат для проверки того, меньше ли первый
+                                             аргумент, чем второй.
+
+<N extends Number> Expression<N>
+        max(Expression<N> x) - Создайте агрегатное выражение, применяя числовую операцию max.
+
+<N extends Number> Expression<N>
+        min(Expression<N> x) - Создайте агрегатное выражение, применяя числовую операцию min.
+
+Expression<Integer>
+        mod(Expression<Integer> x,
+            Expression<Integer> y) - Создайте выражение, которое возвращает модуль своих аргументов.
+
+Expression<Integer>
+        mod(Expression<Integer> x,
+                        Integer y) - Создайте выражение, которое возвращает модуль своих аргументов.
+
+Expression<Integer>
+        mod(Integer x,
+            Expression<Integer> y) - Создайте выражение, которое возвращает модуль своих аргументов.
+
+<N extends Number>Expression<N>
+        neg(Expression<N> x) - Создайте выражение, которое возвращает арифметическое отрицание своего
+                               аргумента.
+
+Predicate
+        not(Expression<Boolean> restriction) - Создайте отрицание данного ограничения.
+
+Predicate
+        notEqual(Expression<?> x,
+                 Expression<?> y) - Создайте предикат для проверки аргументов в пользу неравенства.
+
+Predicate
+        notEqual(Expression<?> x,
+                        Object y) - Создайте предикат для проверки аргументов в пользу неравенства.
+
+Predicate
+        notLike(Expression<String> x,
+                Expression<String> pattern) - Создайте предикат для проверки того, не удовлетворяет
+                                              ли выражение заданному шаблону.
+
+Predicate
+        notLike(Expression<String> x,
+                Expression<String> pattern,
+                char escapeChar) - Создайте предикат для проверки того, не удовлетворяет ли выражение
+                                   заданному шаблону.
+
+Predicate
+        notLike(Expression<String> x,
+                Expression<String> pattern,
+                Expression<Character> escapeChar) - Создайте предикат для проверки того, не
+                                                    удовлетворяет ли выражение заданному шаблону.
+
+Predicate
+        notLike(Expression<String> x,
+                      String pattern) - Создайте предикат для проверки того, не удовлетворяет
+                                        ли выражение заданному шаблону.
+
+Predicate
+        notLike(Expression<String> x,
+                      String pattern,
+                     char escapeChar) - Создайте предикат для проверки того, не удовлетворяет
+                                        ли выражение заданному шаблону.
+
+Predicate
+        notLike(Expression<String> x,
+                String pattern,
+                Expression<Character> escapeChar) - Создайте предикат для проверки того, не
+                                                    удовлетворяет ли выражение заданному шаблону.
+
+<Y> Expression<Y>
+        nullif(Expression<Y> x,
+               Expression<?> y) - Создайте выражение, которое проверяет, равны ли его аргументы,
+                                  возвращая null, если они равны, и значение первого выражения,
+                                  если они не равны.
+
+<Y> Expression<Y>
+        nullif(Expression<Y> x,
+                           Y y) - Создайте выражение, которое проверяет, равны ли его аргументы,
+                                  возвращая null, если они равны, и значение первого выражения,
+                                  если они не равны.
+
+<T> Expression<T>
+        nullLiteral(Class<T> resultClass) - Создайте выражение для нулевого литерала с заданным типом.
+
+Predicate
+        or(Expression<Boolean> x,
+           Expression<Boolean> y) - Создайте дизъюнкт данных логических выражений.
+
+Predicate
+        or(Predicate... restrictions) - Создайте дизъюнкт данных предикатов ограничения.
+
+<T> ParameterExpression<T>
+        parameter(Class<T> paramClass) - Создайте выражение параметра.
+
+<T> ParameterExpression<T>
+        parameter(Class<T> paramClass,
+                          String name) - Создайте выражение параметра с заданным именем.
+
+<N extends Number>Expression<N>
+        prod(Expression<? extends N> x,
+             Expression<? extends N> y) - Создайте выражение, которое возвращает произведение
+                                          своих аргументов.
+
+<N extends Number> Expression<N>
+        prod(Expression<? extends N> x,
+                                   N y) - Создайте выражение, которое возвращает произведение
+                                          своих аргументов.
+
+<N extends Number>Expression<N>
+        prod(N x,
+             Expression<? extends N> y) - Создайте выражение, которое возвращает произведение
+                                          своих аргументов.
+
+Expression<Number>
+        quot(Expression<? extends Number> x,
+             Expression<? extends Number> y) - Создайте выражение, которое возвращает частное
+                                               своих аргументов.
+
+Expression<Number>
+        quot(Expression<? extends Number> x,
+                                   Number y) - Создайте выражение, которое возвращает частное
+                                               своих аргументов.
+
+Expression<Number>
+        quot(Number x,
+             Expression<? extends Number> y) - Создайте выражение, которое возвращает частное
+                                               своих аргументов.
+
+<R> CriteriaBuilder.Case<R>
+        selectCase() - Создайте выражение общего случая.
+
+<C,R> CriteriaBuilder.SimpleCase<C,R>
+        selectCase(Expression<? extends C> expression) - Создайте простое выражение case.
+
+<C extends Collection<?>>Expression<Integer>
+        size(C collection) - Создайте выражение, которое проверяет размер коллекции.
+
+<C extends Collection<?>>Expression<Integer>
+        size(Expression<C> collection) - Создайте выражение, которое проверяет размер коллекции.
+
+<Y> Expression<Y>
+        some(Subquery<Y> subquery) - Создайте некоторое выражение для результатов подзапроса.
+
+Expression<Double>
+        sqrt(Expression<? extends Number> x) - Создайте выражение, которое возвращает квадратный
+                                               корень своего аргумента.
+
+Expression<String>
+        substring(Expression<String> x,
+                  Expression<Integer> from) - Создайте выражение для извлечения подстроки.
+
+Expression<String>
+        substring(Expression<String> x,
+                  Expression<Integer> from,
+                  Expression<Integer> len) - Создайте выражение для извлечения подстроки.
+
+Expression<String>
+        substring(Expression<String> x,
+                              int from) - Создайте выражение для извлечения подстроки.
+
+Expression<String>
+        substring(Expression<String> x,
+                              int from,
+                               int len) - Создайте выражение для извлечения подстроки.
+
+<N extends Number> Expression<N>
+        sum(Expression<? extends N> x,
+            Expression<? extends N> y) - Создайте выражение, которое возвращает сумму
+                                         своих аргументов.
+
+<N extends Number> Expression<N>
+        sum(Expression<? extends N> x,
+                                  N y) - Создайте выражение, которое возвращает сумму
+                                         своих аргументов.
+
+<N extends Number>Expression<N>
+        sum(Expression<N> x) - Создайте агрегатное выражение, применяя операцию суммы.
+
+<N extends Number> Expression<N>
+        sum(N x,
+            Expression<? extends N> y) - Создайте выражение, которое возвращает сумму
+                                         своих аргументов.
+
+Expression<Double>
+        sumAsDouble(Expression<Float> x) - Создайте агрегатное выражение, применяя операцию
+                                           суммы к выражению с плавающей точкой, возвращая
+                                           результат типа Double.
+
+Expression<Long>
+        sumAsLong(Expression<Integer> x) - Создайте агрегатное выражение, применяя операцию
+                                           суммы к выражению с целым значением, возвращая
+                                           результат типа Long.
+
+Expression<BigDecimal>
+        toBigDecimal(Expression<? extends Number> number) - Приведение типов.
+
+Expression<BigInteger>
+        toBigInteger(Expression<? extends Number> number) - Приведение типов.
+
+Expression<Double>
+        toDouble(Expression<? extends Number> number) - Приведение типов.
+
+Expression<Float>
+        toFloat(Expression<? extends Number> number) - Приведение типов.
+
+Expression<Integer>
+        toInteger(Expression<? extends Number> number) - Приведение типов.
+
+Expression<Long>
+        toLong(Expression<? extends Number> number) - Приведение типов.
+
+Expression<String>
+        toString(Expression<Character> character) - Приведение типов.
+
+<X,T,E extends T> CollectionJoin<X,E>
+        treat(CollectionJoin<X,T> join,
+                         Class<E> type) - Приведение объекта CollectionJoin к указанному типу.
+
+<X,T,V extends T> Join<X,V>
+        treat(Join<X,T> join,
+               Class<V> type) - Приведение объекта соединения к указанному типу.
+
+<X,T,E extends T> ListJoin<X,E>
+        treat(ListJoin<X,T> join,
+                   Class<E> type) - Приведение объекта ListJoin к указанному типу.
+
+<X,K,T,V extends T> MapJoin<X,K,V>
+        treat(MapJoin<X,K,T> join,
+                    Class<V> type) - Приведение объекта MapJoin к указанному типу.
+
+<X,T extends X> Path<T>
+        treat(Path<X> path,
+             Class<T> type) - Приведение объекта Path к указанному типу.
+
+<X,T extends X> Root<T>
+        treat(Root<X> root,
+              Class<T> type) - Приведение корневого объекта к указанному типу.
+
+<X,T,E extends T> SetJoin<X,E>
+        treat(SetJoin<X,T> join
+                  Class<E> type) - Приведение объекта SetJoin к указанному типу.
+
+Expression<String>
+        trim(char t,
+             Expression<String> x) - Создайте выражение для обрезки символов с обоих концов строки.
+
+Expression<String>
+        trim(CriteriaBuilder.Trimspec ts,
+                                  char t,
+                    Expression<String> x) - Создайте выражение, чтобы обрезать символ из строки.
+
+Expression<String>
+        trim(CriteriaBuilder.Trimspec ts,
+                 Expression<Character> t,
+                    Expression<String> x) - Создайте выражение, чтобы обрезать символ из строки.
+
+Expression<String>
+        trim(CriteriaBuilder.Trimspec ts,
+                    Expression<String> x) - Создайте выражение для обрезки пробелов в строке.
+
+Expression<String>
+        trim(Expression<Character> t,
+                Expression<String> x) - Создайте выражение для обрезки символов с обоих концов строки.
+
+Expression<String>
+        trim(Expression<String> x) - Создайте выражение для обрезки пробелов с обоих концов строки.
+
+CompoundSelection<Tuple>
+        tuple(Selection<?>... selections) - Создайте элемент выбора со значением кортежа.
+
+Expression<String>
+        upper(Expression<String> x) - Создайте выражение для преобразования строки в верхний регистр.
+
+<V,M extends Map<?,V>> Expression<Collection<V>>
+        values(M map) - Создайте выражение, которое возвращает значения карты.
+
+*****************************************************************************************************
+Полная ENG вер. см. https://docs.oracle.com/javaee/7/api/javax/persistence/criteria/CriteriaBuilder.html
+*****************************************************************************************************
