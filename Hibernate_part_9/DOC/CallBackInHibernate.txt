@@ -1,0 +1,138 @@
+****** CallBack вызовы на основе аннотаций ******
+
+*** Нативная архитектура событий (Native Event Architecture) ***
+
+Всякий раз, когда мы вызываем методы в Session интерфейсе для сохранения, обновления или
+удаления объектов; сессия генерирует соответствующее событие (event) на основе выполненного
+метода и передает его сконфигурированным слушателям - listeners событий для этого типа.
+
+Типы событий объявляются как значения ENUM в org.hibernate.event.spi.EventType.
+
+Например, когда мы сохраняем объект с помощью метода session.persist() генерируется событие -
+EventType.PERSIST. Если в PersistEventListener для этого объекта зарегистрирована какая-либо
+реализация, событие передается этому слушателю для обработки.
+
+Слушатель может использоваться несколькими сущностями, поэтому рекомендуется, чтобы слушатели
+не сохраняли состояние.
+
+*** Создание слушателя событий (Event Listener) ***
+
+Допустим, у нас есть TransactionEntity и мы заинтересованы в прослушивании события всякий раз,
+когда сущность сохраняется. Мы реализуем PersistEventListener и определяем методы CallBack вызова:
+
+******************************************************************************************************
+public class PersistTransactionListerner implements PersistEventListener {
+
+  Logger LOG = LoggerFactory.getLogger(TransactionEntity.class);
+
+  @Override
+  public void onPersist(PersistEvent persistEvent) throws HibernateException {
+    LOG.info("PersistTransactionListerner.onPersist() invoked !!");
+    TransactionEntity transaction =
+        (TransactionEntity) persistEvent.getObject();
+
+    if (transaction.getDuration() == null) {
+      transaction.setDuration(Duration.between(transaction.getStartTS(),
+          transaction.getEndTS()));
+    }
+  }
+
+  @Override
+  public void onPersist(PersistEvent persistEvent,
+                        PersistContext persistContext) throws HibernateException {
+    LOG.info("PersistTransactionListerner.onPersist() invoked !!");
+  }
+}
+******************************************************************************************************
+
+*** Регистрация слушателя событий (Event Listener) ***
+
+Чтобы зарегистрировать слушателя событий, нам нужно создать собственную реализацию интерфейса
+org.hibernate.integrator.spi.Integrator. Integrator в основном используется только для регистрации
+слушателей событий.
+
+******************************************************************************************************
+public class AppIntegrator implements Integrator {
+  @Override
+  public void integrate(
+      Metadata metadata,
+      SessionFactoryImplementor sessionFactory,
+      SessionFactoryServiceRegistry serviceRegistry) {
+
+    final EventListenerRegistry eventListenerRegistry =
+        serviceRegistry.getService(EventListenerRegistry.class);
+
+    eventListenerRegistry.prependListeners(EventType.PERSIST,
+        PersistTransactionListerner.class);
+  }
+
+  @Override
+  public void disintegrate(
+      SessionFactoryImplementor sessionFactory,
+      SessionFactoryServiceRegistry serviceRegistry) {
+    //
+  }
+}
+******************************************************************************************************
+
+Затем регистрируется Integrator в постоянном контексте с помощью BootstrapServiceRegistryBuilder.
+Обратите внимание, что BootstrapServiceRegistry предназначен для хранения в основном 3 служб,
+которые нужны Hibernate как при загрузке, так и во время выполнения:
+- ClassLoaderService
+- IntegratorService
+- StrategySelector
+
+******************************************************************************************************
+BootstrapServiceRegistryBuilder bootstrapRegistryBuilder =
+    new BootstrapServiceRegistryBuilder();
+
+bootstrapRegistryBuilder.applyIntegrator(new AppIntegrator());
+
+BootstrapServiceRegistry bootstrapRegistry =
+    bootstrapRegistryBuilder.build();
+******************************************************************************************************
+
+Теперь добавляем пользовательский экземпляр BootstrapServiceRegistry в StandardServiceRegistry и
+создаем SessionFactory:
+
+******************************************************************************************************
+StandardServiceRegistry standardRegistry
+    = new StandardServiceRegistryBuilder(bootstrapRegistry)
+    .configure("hibernate-test.cfg.xml")
+    .build();
+
+Metadata metadata = new MetadataSources(standardRegistry)
+    .addAnnotatedClass(TransactionEntity.class)
+    .getMetadataBuilder()
+    .build();
+
+sessionFactory = metadata
+    .getSessionFactoryBuilder().build();
+******************************************************************************************************
+
+*** Аннотации CallBack вызова в Entity ***
+
+JakartaAPI и JavaxPersistenceAPI определяет набор CallBack вызовов с помощью аннотаций:
+
+- @PrePersist: Выполняется перед выполнением или каскадированием операции сохранения (persist).
+- @PreRemove: Выполняется перед выполнением или каскадированием операции удаления (remove).
+- @PreUpdate: выполняется перед операцией обновления (update).
+- @PostPersist: выполняется после операции сохранения (after the persist).
+- @PostRemove: выполняется после операции удаления (after the remove).
+- @PostUpdate: выполняется после операции обновления (after the update).
+- @PostLoad: Выполняется после того, как сущность была загружена или обновлена в текущем
+             контексте состояния (persistence context).
+
+*** Применение аннотаций ***
+
+Мы можем использовать эти аннотации двумя способами:
+- Аннотируйте методы самой сущности для получения уведомлений
+  (как это реализовано у нас в MeetingRoom.java).
+- Аннотируйте методы в отдельном классе. Затем мы можем использовать
+  этот класс как класс слушатель - listener сущностей для нескольких
+  (или всех выбранных нами) сущностей.
+
+  Необходимо убедиться, что слушатель сущностей является классом без
+  сохранения состояния с конструктором без аргументов.
+
+Мы можем смешивать оба подхода и использовать их вместе.
