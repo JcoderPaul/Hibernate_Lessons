@@ -1,0 +1,1 @@
+CREATE SCHEMA training_base;

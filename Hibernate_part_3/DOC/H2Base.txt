@@ -1,0 +1,11 @@
+См. https://www.h2database.com/html/features.html
+См. https://www.h2database.com/html/features.html#products_work_with - как использовать.
+
+*** Обзор URL базы данных ***
+Эта база данных поддерживает несколько режимов подключения и настроек подключения.
+Это достигается с помощью разных URL-адресов баз данных. Настройки в URL-адресах
+не чувствительны к регистру.
+
+Нас интересует In - memory:
+In-memory (named)	jdbc:h2:mem:<databaseName>
+                    jdbc:h2:mem:test_mem
