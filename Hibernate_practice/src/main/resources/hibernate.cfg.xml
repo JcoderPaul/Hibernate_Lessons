@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/part_ten_base</property>
+    <property name="connection.username">postgres</property>
+    <property name="connection.password">postgres</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+    <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+    <!-- <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property> -->
+    <!-- DB schema will be updated if needed -->
+    <property name="hibernate.hbm2ddl.auto">validate</property>
+    <!--
+    Закомментируем работу с кешем второго уровня:
+    <property name="hibernate.cache.use_second_level_cache">true</property>
+    <property name="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>
+    <property name="hibernate.javax.cache.uri">/ehcache-config.xml</property>
+    <property name="hibernate.cache.use_query_cache">true</property>
+    И не будем использовать генератор статистики:
+    <property name="hibernate.generate_statistics">true</property>
+    -->
+
+    <!--
+    Указываем с каким сессионным контекстом мы будем взаимодействовать:
+    - если thread - это означает, что мы хотим использовать локальный поток;
+    - если managed - хотим использовать managed;
+    - если jta - хотим использовать JTA;
+     -->
+    <property name="hibernate.current_session_context_class">thread</property>
+
+    <!-- В этой части мы будем добавлять сущности в hibernate.cfg.xml, а не в HibernateUtil.ValidationAPIUnit.java -->
+    <mapping class="oldboy.entity.User"/>
+    <mapping class="oldboy.entity.Company"/>
+    <mapping class="oldboy.entity.accessory.Profile"/>
+    <mapping class="oldboy.entity.Chat"/>
+    <mapping class="oldboy.entity.UserChat"/>
+    <mapping class="oldboy.entity.Payment"/>
+
+  </session-factory>
+</hibernate-configuration>
