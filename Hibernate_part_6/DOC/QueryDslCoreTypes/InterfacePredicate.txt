@@ -1,0 +1,31 @@
+****** Interface Predicate ******
+
+Библиотека (пакет): com.querydsl.core.types
+
+Все суперинтерфейсы: Expression<Boolean>, Serializable
+Все известные классы реализации: BooleanBuilder, BooleanExpression, BooleanOperation,
+                                 BooleanPath, BooleanTemplate, PredicateOperation,
+                                 PredicateTemplate, QueryElement, QueryElement,
+                                 QueryElement
+
+*******************************************************************************************************
+public interface Predicate
+                    extends Expression<Boolean>
+*******************************************************************************************************
+
+Predicate - это общий интерфейс для логических типизированных выражений пакета com.querydsl.core.types.
+
+*** Методы ***
+
+Predicate
+        not() - Получить отрицание выражения;
+
+-------------------------------------------------------------------------------------------------------
+Методы, унаследованные от интерфейса com.querydsl.core.types.Expression: accept, getType
+-------------------------------------------------------------------------------------------------------
+
+*******************************************************************************************************
+См. более подробно:
+http://querydsl.com/static/querydsl/4.4.0/apidocs/com/querydsl/core/types/Predicate.html
+http://querydsl.com/static/querydsl/5.0.0/apidocs/
+*******************************************************************************************************

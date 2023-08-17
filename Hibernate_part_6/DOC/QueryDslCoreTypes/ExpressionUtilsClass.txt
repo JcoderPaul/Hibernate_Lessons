@@ -1,0 +1,269 @@
+****** ExpressionUtils ******
+
+Библиотека (пакет): com.querydsl.core.types
+
+Class ExpressionUtils
+
+java.lang.Object
+    com.querydsl.core.types.ExpressionUtils
+
+*********************************************************************************************************
+public final class ExpressionUtils extends Object
+*********************************************************************************************************
+
+ExpressionUtils предоставляет утилиты для создания общих экземпляров операций. Этот класс используется
+внутри QueryDsl и не подходит для использования в случаях, когда необходимы методы DSL, поскольку
+реализации Expression, используемые в этом классе, являются минимальными внутренними реализациями.
+
+static <T> Expression<T>
+            all(CollectionExpression<?,? super T> col) - Создать выражение для всех col.
+
+static <T> Expression<T>
+            all(SubQueryExpression<? extends T> col) - Создать выражение для всех столбцов.
+
+static Predicate
+            allOf(Collection<Predicate> exprs) - Создать пересечение заданных аргументов.
+
+static Predicate
+            allOf(Predicate... exprs) - Создать пересечение заданных аргументов.
+
+static Predicate
+            and(Predicate left, Predicate right) - Создать пересечение заданных аргументов.
+
+static <T> Expression<T>
+            any(CollectionExpression<?,? super T> col) - Создайте любое выражение col.
+
+static <T> Expression<T>
+            any(SubQueryExpression<? extends T> col) - Создайте любое выражение col.
+
+static Predicate
+            anyOf(Collection<Predicate> exprs) - Создать объединение данных аргументов.
+
+static Predicate
+            anyOf(Predicate... exprs) - Создать объединение данных аргументов.
+
+static <D> Expression<D>
+            as(Expression<D> source, Path<D> alias) - Создайте выражение псевдонима с
+                                                      заданным источником и псевдонимом.
+
+static <D> Expression<D>
+            as(Expression<D> source, String alias) - Создайте выражение псевдонима с
+                                                     заданным источником и псевдонимом.
+
+static Expression<Long>
+            count(Expression<?> source) - Создайте выражение счета (источника).
+
+static String
+            createRootVariable(Path<?> path) - Создайте новую корневую переменную на
+                                               основе заданного пути.
+
+static String
+            createRootVariable(Path<?> path, int suffix) - Создайте новую корневую переменную
+                                                           на основе заданного пути и суффикса.
+
+static com.google.common.collect.ImmutableList<Expression<?>>
+            distinctList(Expression<?>... args) - Создайте отдельный список заданных аргументов.
+
+static com.google.common.collect.ImmutableList<Expression<?>>
+            distinctList(Expression<?>[]... args) - Создайте отдельный список содержимого
+                                                    объединенного массива.
+
+static <D> Predicate
+            eq(Expression<D> left,
+               Expression<? extends D> right) - Создайте left == right выражение.
+
+static <D> Predicate
+            eqConst(Expression<D> left,
+                    D constant) - Создайте left == D выражение.
+
+static <T> Expression<T>
+            extract(Expression<T> expr) - Получить потенциально обернутое выражение.
+
+static <D> Predicate
+            in(Expression<D> left,
+               Collection<? extends D> right) - Создайте выражение left in right.
+
+static <D> Predicate
+            in(Expression<D> left,
+               CollectionExpression<?,? extends D> right) - Создайте выражение left in right.
+
+static <D> Predicate
+            in(Expression<D> left,
+               SubQueryExpression<? extends D> right) - Создайте выражение left in right.
+
+static <D> Predicate
+            inAny(Expression<D> left,
+                  Iterable<? extends Collection<? extends D>> lists) - Создайте выражение left in right
+                                                                       или для каждого списка.
+
+static Predicate
+            isNotNull(Expression<?> left) - Создайте left не нулевое выражение.
+
+static Predicate
+            isNull(Expression<?> left) - Создайте left нулевое выражение.
+
+static Expression<String>
+            likeToRegex(Expression<String> expr) - Преобразовать заданный подобный шаблон в
+                                                   шаблон регулярного выражения.
+
+static Expression<String>
+            likeToRegex(Expression<String> expr,
+                        boolean matchStartAndEnd) - Преобразовать заданный подобный шаблон
+                                                    в шаблон регулярного выражения.
+
+static <T> Expression<T>
+            list(Class<T> clazz,
+                 Expression<?>... exprs) - Создайте список выражений для заданных аргументов.
+
+static <T> Expression<T>
+            list(Class<T> clazz,
+                 List<? extends Expression<?>> exprs) - Создайте список выражений для заданных
+                                                        аргументов.
+
+static <D> Predicate
+            ne(Expression<D> left,
+               Expression<? super D> right) - Создайте left != right выражение.
+
+static <D> Predicate
+            neConst(Expression<D> left,
+                            D constant) - Создайте left != D как постоянная выражение.
+
+static <D> Predicate
+            notIn(Expression<D> left,
+                  Collection<? extends D> right) - Создать выражение left не в right.
+
+static <D> Predicate
+            notIn(Expression<D> left,
+                  CollectionExpression<?,? extends D> right) - Создать выражение left не в right.
+
+static <D> Predicate
+            notIn(Expression<D> left,
+                  SubQueryExpression<? extends D> right) - Создать выражение left не в right.
+
+static <D> Predicate
+            notInAny(Expression<D> left,
+                     Iterable<? extends Collection<? extends D>> lists) - Создать выражение left
+                                                                          не в right и ... для
+                                                                          каждого списка.
+
+static <T> Operation<T>
+            operation(Class<? extends T> type,
+                            Operator operator,
+                        Expression<?>... args) - Создайте новое выражение операции new Operation.
+
+static <T> Operation<T>
+            operation(Class<? extends T> type,
+                            Operator operator,
+                      com.google.common.collect.ImmutableList<Expression<?>> args) -
+                                                Создайте новое выражение операции new Operation.
+
+static Predicate
+            or(Predicate left,
+               Predicate right) - Создайте left или right выражение.
+
+static Expression<?>
+            orderBy(List<OrderSpecifier<?>> args) - Создайте выражение из заданных спецификаторов
+                                                    порядка.
+
+static <T> Path<T>
+            path(Class<? extends T> type,
+                          Path<?> parent,
+                         String property) - Создайте новое выражение пути - new Path.
+
+static <T> Path<T>
+            path(Class<? extends T> type,
+                   PathMetadata metadata) - Создайте новое выражение пути - new Path.
+
+static <T> Path<T>
+            path(Class<? extends T> type,
+                         String variable) - Создайте новое выражение пути - new Path.
+
+static PredicateOperation
+            predicate(Operator operator,
+                  Expression<?>... args) - Создайте новое выражение операции new Operation.
+
+static PredicateOperation
+            predicate(Operator operator,
+                      com.google.common.collect.ImmutableList<Expression<?>> args) -
+                                           Создайте новое выражение операции new Operation.
+
+static PredicateTemplate
+            predicateTemplate(String template,
+                              com.google.common.collect.ImmutableList<?> args) -
+                Устарело, вместо этого используйте predicateTemplate(String, List) instead.
+
+static PredicateTemplate
+            predicateTemplate(String template,
+                                 List<?> args) - Создайте новое выражение шаблона new Template.
+
+static PredicateTemplate
+            predicateTemplate(String template,
+                               Object... args) - Создайте новое выражение шаблона new Template.
+
+static PredicateTemplate
+            predicateTemplate(Template template,
+                              com.google.common.collect.ImmutableList<?> args) -
+                  Устарело, вместо этого используйте predicateTemplate(Template, List) instead.
+
+static PredicateTemplate
+            predicateTemplate(Template template,
+                                   List<?> args) - Создайте новое выражение шаблона new Template.
+
+static PredicateTemplate
+            predicateTemplate(Template template,
+                                 Object... args)  - Создайте новое выражение шаблона new Template.
+
+static Expression<String>
+            regexToLike(Expression<String> expr) - Преобразуйте данное выражение из формы
+                                                   регулярного выражения в подобное.
+
+static <T> TemplateExpression<T>
+            template(Class<? extends T> cl,
+                           String template,
+                           com.google.common.collect.ImmutableList<?> args) -
+                        Устарело, вместо этого используйте template(Class, String, List) instead.
+
+static <T> TemplateExpression<T>
+            template(Class<? extends T> cl,
+                           String template,
+                              List<?> args) - Создайте новое выражение шаблона new Template.
+
+static <T> TemplateExpression<T>
+            template(Class<? extends T> cl,
+                           String template,
+                            Object... args) - Создайте новое выражение шаблона new Template.
+
+static <T> TemplateExpression<T>
+            template(Class<? extends T> cl,
+                         Template template,
+                         com.google.common.collect.ImmutableList<?> args) -
+                     Устарело, вместо этого используйте template(Class, Template, List) instead.
+
+static <T> TemplateExpression<T>
+            template(Class<? extends T> cl,
+                         Template template,
+                              List<?> args) - Создайте новое выражение шаблона new Template.
+
+static <T> TemplateExpression<T>
+            template(Class<? extends T> cl,
+                         Template template,
+                            Object... args) - Создайте новое выражение шаблона new Template.
+
+static Expression<?>
+            toExpression(Object o) - Преобразует данный объект в выражение.
+
+static Expression<String>
+            toLower(Expression<String> stringExpression) - Преобразует данное выражение в
+                                                           lower(expression).
+
+-------------------------------------------------------------------------------------------------------
+Методы, унаследованные от класса java.lang.Object: clone, equals, finalize, getClass,
+                                                   hashCode, notify, notifyAll, toString,
+                                                   wait.
+-------------------------------------------------------------------------------------------------------
+
+*******************************************************************************************************
+См. более подробно:
+http://querydsl.com/static/querydsl/4.1.4/apidocs/com/querydsl/core/types/ExpressionUtils.html
+http://querydsl.com/static/querydsl/5.0.0/apidocs/
+*******************************************************************************************************
