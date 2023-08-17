@@ -1,0 +1,174 @@
+plugins {
+    id 'java'
+    /*
+    Добавляем QueryDsl плагин:
+    https://plugins.gradle.org/plugin/com.ewerk.gradle.plugins.querydsl
+    */
+    id("com.ewerk.gradle.plugins.querydsl") version "1.0.10"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+/*
+Бывают ситуации когда наша сгенерированная модель, помещенная
+в аннатоционный процессор не видит исходных файлов, для этого
+мы принудительно прописываем к ним путь.
+*/
+sourceSets {
+    main {
+        java {
+            srcDirs += "$buildDir/generated/sources/annotationProcessor/java/main"
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+    /* Поскольку библиотечка старая необходимо подправить ее конфигурацию */
+    querydsl.extendsFrom implementation, runtimeOnly, compileOnly
+}
+
+dependencies {
+    /*
+    К плагину QueryDsl нам нужны еще зависимости:
+
+    Поскольку многие считают JPA Criteria API неудобным. Была разработана
+    библиотека QueryDsl. QueryDSL Predicate — это мощный и чрезвычайно гибкий
+    инструмент для работы с БД и удобен для Java-разработчиков, которые не
+    очень хорошо разбираются в SQL (или совсем не разбираются), поскольку
+    предикаты позволяют работать с БД при помощи привычного объектного
+    представления сущностных зависимостей.
+
+    Фактически это аналог JpaModelGen библиотеки закомментированной ниже и
+    использованной нами в предыдущем разделе - Hibernate_part_5
+
+    Подключаем 'нашу прелесть'...
+    */
+
+    implementation 'com.querydsl:querydsl-jpa:5.0.0'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'
+
+    /*
+    Данная зависимость позволяет состыковать QueryDsl и другие уже
+    работающие у нас в проекте аннотации (вернее позволяет увидеть
+    их ей)
+    */
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+    /*
+    В данном проекте мы не будем использовать JpaModelGen.
+
+    Для удобства работы с объектами и их полями в CriteriaAPI, подключим
+    следующие зависимости (желательно, чтобы версия hibernate-jpamodelgen
+    совпадала с версией hibernate-core, мы используем старенькую
+    5.6.15.Final):
+
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.6.15.Final'
+    */
+
+    /*
+    https://mvnrepository.com/artifact/com.h2database/h2
+    Мы будем использовать данную зависимость в тестах
+    если захотим тестировать нашу БД в H2.
+
+    testImplementation 'com.h2database:h2:2.2.220'
+    */
+
+    // https://mvnrepository.com/artifact/org.testcontainers/postgresql
+    testImplementation 'org.testcontainers:postgresql:1.17.6'
+
+    /*
+    https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    Данная библиотека применяется для логирования процессов
+    */
+    //implementation 'org.slf4j:slf4j-api:2.0.7'
+    /*
+    https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
+    Это мост-адаптер между slf4j и log4j
+    */
+    implementation 'org.slf4j:slf4j-log4j12:2.0.5'
+
+    /*
+    https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    Библиотеки для работы с JSON
+    */
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+
+    /*
+    https://mvnrepository.com/artifact/com.vladmihalcea/hibernate-types-52
+    Данная библиотека применяется при реализации пользовательских типов в
+    работе с Hibernate и БД.
+    */
+    implementation 'com.vladmihalcea:hibernate-types-52:2.21.1'
+
+    /*
+    https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+    Чтобы иметь возможность использовать аннотации для стыковки с Hibernate,
+    хотя библиотека jakarta.persistence будет работать точно так же с аннотациями
+    @Entity, @Table, @Id, @Column и т.д.
+    */
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+
+    /*
+    https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
+    https://mvnrepository.com/artifact/org.hibernate/hibernate-core
+    */
+    compileOnly 'org.hibernate:hibernate-annotations:3.5.6-Final'
+    /* полная имплементация нам будет нужна только тут: */
+    implementation 'org.hibernate:hibernate-core:5.6.15.Final'
+    /*
+    https://mvnrepository.com/artifact/org.postgresql/postgresql
+    на стадии компиляции он нам не нужен пусть будет runtimeOnly
+    */
+    runtimeOnly 'org.postgresql:postgresql:42.6.0'
+
+    /* Lombok аннотации нужны только на этапе компиляции */
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    /* Lombok для использования в тестах */
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    /* Junit 5 */
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+}
+
+querydsl {
+    /* Выбираем с какой JPA мы работаем */
+    jpa = true
+    /* Задаем директорию где будут находиться сбилженные аннотационным процессором файлы */
+    querydslSourcesDir = "$buildDir/generated/sources/annotationProcessor/java/main"
+}
+
+compileQuerydsl {
+    /* Задача которая занимается компилированием наших сгенерированных QueryDSL классов */
+    options.annotationProcessorPath = configurations.querydsl
+}
+/*
+Бывают ситуации, когда при запуске тестов они, то работают, то нет,
+при этом среда разработки указывает на отсутствие файлов модели. Есть
+рекомендации просто чистить директорию build, а с ней и сгенерированные
+классы.
+*/
+compileQuerydsl.dependsOn(clean)
+
+test {
+    useJUnitPlatform()
+}
