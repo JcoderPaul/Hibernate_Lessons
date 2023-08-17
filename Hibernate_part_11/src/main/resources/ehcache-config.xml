@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache:config
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns:ehcache='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.1.xsd">
+
+    <ehcache:cache alias="User" uses-template="simple"/>
+    <ehcache:cache alias="Company" uses-template="simple"/>
+    <ehcache:cache alias="Chat" uses-template="simple"/>
+    <ehcache:cache alias="Payment" uses-template="simple"/>
+    <ehcache:cache alias="UserChat" uses-template="simple"/>
+
+    <!--
+    Для упрощения создадим блок общих настроек для всех кешей:
+    - ttl (time to live - время жизни сущности до удаления из кеша) = 10 сек.
+    - heap (общая куча для хранения сущностей) = 1000 шт.
+    -->
+    <ehcache:cache-template name="simple">
+        <ehcache:expiry>
+            <ehcache:ttl>10</ehcache:ttl>
+        </ehcache:expiry>
+        <ehcache:heap>1000</ehcache:heap>
+    </ehcache:cache-template>
+
+</ehcache:config>
