@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+    <!--
+    ConsoleAppender берет лог сообщения и направляет в указанное место, например
+    System.out, также мы задаем формат сообщения PatternLayout (т.е. в каком виде
+    отобразить сообщение лога).
+
+    Мы можем добавить несколько аппендеров для вывода логов в другие хранилища
+    информации, в этом главное удобство логгеров см. LoggingMetrics.jpg.
+    -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.out"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="[%d{HH:mm:ss,SSS}] %p [%c: %L] %m%n"/>
+        </layout>
+    </appender>
+    <!--
+        RollingFileAppender берет лог сообщения и направляет в файл - hibernate-starter.log,
+        мы должны настроить, стиль логирования:
+        <param name="append" value="true"/> - при каждом запуске приложения мы добавляем
+                                              информацию в файл, а не затираем;
+        <param name="maxFileSize" value="20MB"/> - максимальный размер файла, если мы достигли
+                                                   этого размера, то создается новый файл;
+        <param name="maxBackupIndex" value="10"/> - и таких файлов может быть (у нас 10);
+    -->
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="Logfile\\logging-demo.log"/>
+
+        <param name="append" value="true"/>
+        <param name="maxFileSize" value="1KB"/>
+        <param name="maxBackupIndex" value="10"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}] %p [%c: %L] %m%n"/>
+        </layout>
+
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ALL"/>
+        </filter>
+    </appender>
+
+    <!--
+    Настройка самого главного ROOT логгера, в нем определяется какие сообщения
+    указывать (уровень логирования). Если мы указали 'info', то уровни ниже
+    (DEBUG, TRACE) отображаться не будут, а выше (WARN, ERROR, FATAL) будут.
+    Если применить 'trace', то мы отображаем все возможные сообщения.
+
+    ROOT может быть один, а вот логеров отслеживающих отдельные пакеты может
+    быть много. Например, мы хотим отдельно отслеживать 'oldboy'.
+    !!! Логгеры имеют иерархию, Root главный остальные его наследники, и может
+    сложиться ситуация когда информация из нескольких логеров дублируется, для
+    исключения этого используем параметр additivity="false" !!!
+    -->
+    <logger name="oldboy" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <root>
+        <level value="info"/>
+        <!--
+        Указываем наш appender, т.е. куда мы отправляем наши логи, аппендеров может быть
+        несколько. Т.е. это некий фасад, который раскидывает наши логи по указанным аппендерам.
+        -->
+        <appender-ref ref="console"/>
+        <!-- !!! Не забываем указать наш аппендер для файла !!! -->
+        <appender-ref ref="file"/>
+    </root>
+
+</log4j:configuration>
