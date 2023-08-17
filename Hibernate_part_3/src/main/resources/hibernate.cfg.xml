@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+    <property name="connection.username">postgres</property>
+    <property name="connection.password">postgres</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+    <!-- <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property> -->
+
+    <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+    <!-- В этой части мы будем добавлять сущности в hibernate.cfg.xml, а не в HibernateUtil.java -->
+    <mapping class="oldboy.entity.User"/>
+    <!-- Lesson_15 volOne-->
+    <mapping class="oldboy.lesson_15_volOne.Entity_15_volOne.Driver"/>
+    <mapping class="oldboy.lesson_15_volOne.Entity_15_volOne.Porter"/>
+    <mapping class="oldboy.lesson_15_volOne.Entity_15_volOne.BaseEntity"/>
+    <!-- Lesson_15 volTwo-->
+    <mapping class="oldboy.lesson_15_volTwo.Entity_15_volTwo.DistributionCenter"/>
+    <mapping class="oldboy.lesson_15_volTwo.Entity_15_volTwo.Storage"/>
+    <!-- Lesson_16 -->
+    <mapping class="oldboy.lesson_16.Entity_16.Manager"/>
+    <mapping class="oldboy.lesson_16.Entity_16.Programmer"/>
+    <mapping class="oldboy.lesson_16.Entity_16.Employee"/>
+    <!-- Lesson_17 -->
+    <mapping class="oldboy.lesson_17.Entity_17.Worker"/>
+    <mapping class="oldboy.lesson_17.Entity_17.Millwright"/>
+    <mapping class="oldboy.lesson_17.Entity_17.DesignEngineer"/>
+    <!-- Lesson_18 -->
+    <mapping class="oldboy.lesson_18.Entity_18.CarServiceSpecialist"/>
+    <mapping class="oldboy.lesson_18.Entity_18.EngineRepairman"/>
+    <mapping class="oldboy.lesson_18.Entity_18.Tinman"/>
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
