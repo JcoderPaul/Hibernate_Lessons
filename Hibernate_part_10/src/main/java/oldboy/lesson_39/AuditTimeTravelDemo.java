@@ -60,9 +60,7 @@ public class AuditTimeTravelDemo {
                 генерирует Hibernate Envers.
                 */
                 Long revision = 11L;
-                Payment oldPayment = auditReader.find(Payment.class,
-                                             1L,
-                                                11L);
+                Payment oldPayment = auditReader.find(Payment.class, 1L, 11L);
                 /*
                 Тут возникает интересный момент, обращение идет в контекст состояний?
                 в котором находятся 'прокси-объект' Payment_AUD - ревизионная копия.
@@ -132,9 +130,7 @@ public class AuditTimeTravelDemo {
                 из аудит-таблиц получить их и перезаписать ими текущие значения
                 записей в БД.
                 */
-                Company backToPastCompany = auditReader.find(Company.class,
-                                                    5,
-                                                       5L);
+                Company backToPastCompany = auditReader.find(Company.class, 5, 5L);
                 /*
                 Находим 5-ю ревизию названия компании с ID = 5
                 -----------------------------------------------
